@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { chapters } from "@/data/story";
 
@@ -18,11 +18,9 @@ const bgColors = [
 
 export default function ChapterTransition({ chapterNumber, onComplete }: Props) {
   const chapter = chapters[chapterNumber - 1];
-  const timerRef = useRef<ReturnType<typeof setTimeout>>(null);
-
   useEffect(() => {
-    timerRef.current = setTimeout(onComplete, 3000);
-    return () => clearTimeout(timerRef.current);
+    const timer = setTimeout(onComplete, 3000);
+    return () => clearTimeout(timer);
   }, [onComplete]);
 
   return (
