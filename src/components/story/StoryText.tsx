@@ -9,7 +9,7 @@ interface Props {
   sceneId: string;
   italic?: boolean;
   continueText?: string;
-  externalClick?: boolean;
+  externalClick?: number;
 }
 
 export default function StoryText({
@@ -62,8 +62,16 @@ export default function StoryText({
   }
 
   useEffect(() => {
-    if (externalClick && !readyToProceed) {
-      handleClick();
+    if (!externalClick) return;
+    if (!typingDone) {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+      setDisplayed(text);
+      setTypingDone(true);
+      return;
+    }
+    if (!readyToProceed) {
+      setReadyToProceed(true);
+      onComplete();
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [externalClick]);
