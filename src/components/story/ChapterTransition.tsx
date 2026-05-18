@@ -18,7 +18,7 @@ const bgColors = [
 
 export default function ChapterTransition({ chapterNumber, onComplete }: Props) {
   const chapter = chapters[chapterNumber - 1];
-  const timerRef = useRef<ReturnType<typeof setTimeout>>();
+  const timerRef = useRef<ReturnType<typeof setTimeout>>(null);
 
   useEffect(() => {
     timerRef.current = setTimeout(onComplete, 3000);
