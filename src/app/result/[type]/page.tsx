@@ -215,6 +215,48 @@ export default function ResultPage() {
             返回首页
           </Link>
         </motion.div>
+
+        {/* Other personality types */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.4 }}
+          className="mt-16"
+        >
+          <h3 className="mb-6 text-center text-lg font-semibold text-foreground/80 md:text-xl">
+            探索其他灵魂角色
+          </h3>
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 md:gap-4">
+            {Object.values(characters).map((c) => {
+              const isCurrent = c.type === typeParam;
+              return (
+                <Link
+                  key={c.type}
+                  href={`/result/${c.type}`}
+                  className={`group relative rounded-xl border p-4 transition-all ${
+                    isCurrent
+                      ? "border-primary/40 bg-primary/10"
+                      : "border-white/5 bg-white/[0.02] hover:border-white/15 hover:bg-white/5"
+                  }`}
+                >
+                  <div className="mb-2 text-2xl">{c.emoji}</div>
+                  <p
+                    className="text-sm font-semibold md:text-base"
+                    style={{ color: c.color }}
+                  >
+                    {c.name}
+                  </p>
+                  <p className="text-xs text-foreground/40">{c.type}</p>
+                  {isCurrent && (
+                    <span className="absolute right-2 top-2 rounded-full bg-primary/20 px-2 py-0.5 text-[10px] text-primary-light">
+                      你的类型
+                    </span>
+                  )}
+                </Link>
+              );
+            })}
+          </div>
+        </motion.div>
       </div>
     </div>
   );

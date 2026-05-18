@@ -38,14 +38,14 @@ export default function ChapterTransition({ chapterNumber, onComplete }: Props) 
         transition={{ delay: 0.3, duration: 0.5 }}
         className="text-center"
       >
-        <p className="mb-2 text-sm tracking-widest text-foreground/40 md:text-base">
+        <p className="mb-2 text-base tracking-widest text-foreground/40 md:text-lg">
           第 {chapter.number} 章
         </p>
-        <h2 className="mb-4 text-3xl font-bold text-foreground/90 md:text-5xl">
+        <h2 className="mb-4 text-4xl font-bold text-foreground/90 md:text-5xl">
           {chapter.title}
         </h2>
         <motion.p
-          className="text-sm text-foreground/50 md:text-base"
+          className="text-base text-foreground/50 md:text-lg"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8, duration: 0.5 }}
