@@ -75,10 +75,18 @@ export default function StoryEngine() {
     answer(choice);
   }
 
+  const [introExited, setIntroExited] = useState(true);
+
   function handleChapterIntroComplete() {
     setShowChapterIntro(false);
     setTransitioning(false);
   }
+
+  useEffect(() => {
+    if (showChapterIntro) {
+      setIntroExited(false);
+    }
+  }, [showChapterIntro]);
 
   useEffect(() => {
     if (isTransitioning && !showChapterIntro) {
@@ -98,7 +106,7 @@ export default function StoryEngine() {
       onClick={snippet && snippetDone ? handleSnippetContinue : undefined}
       style={snippet && snippetDone ? { cursor: "pointer" } : undefined}
     >
-      <AnimatePresence>
+      <AnimatePresence onExitComplete={() => setIntroExited(true)}>
         {showChapterIntro && (
           <ChapterTransition
             chapterNumber={scene.chapter}
@@ -109,41 +117,43 @@ export default function StoryEngine() {
 
       <ProgressBar currentIndex={currentIndex} />
 
-      <div className="flex flex-1 flex-col items-center justify-center px-6 pb-8 pt-4 md:px-8">
-        <div className="w-full max-w-2xl">
-          <div className="mb-8 min-h-[120px] md:mb-12 md:min-h-[160px]">
-            {snippet ? (
-              <StoryText
-                key={`snippet-${scene.id}`}
-                sceneId={`snippet-${scene.id}`}
-                text={snippet}
-                onComplete={handleSnippetComplete}
-                italic
-                continueText="点击屏幕任意位置继续"
-              />
-            ) : (
-              <StoryText
-                key={scene.id}
-                sceneId={scene.id}
-                text={scene.storyText}
-                onComplete={handleTextComplete}
-              />
+      {introExited && (
+        <div className="flex flex-1 flex-col items-center justify-center px-6 pb-8 pt-4 md:px-8">
+          <div className="w-full max-w-2xl">
+            <div className="mb-8 min-h-[120px] md:mb-12 md:min-h-[160px]">
+              {snippet ? (
+                <StoryText
+                  key={`snippet-${scene.id}`}
+                  sceneId={`snippet-${scene.id}`}
+                  text={snippet}
+                  onComplete={handleSnippetComplete}
+                  italic
+                  continueText="点击屏幕任意位置继续"
+                />
+              ) : (
+                <StoryText
+                  key={scene.id}
+                  sceneId={scene.id}
+                  text={scene.storyText}
+                  onComplete={handleTextComplete}
+                />
+              )}
+            </div>
+
+            {!snippet && (
+              <div className="flex justify-center">
+                <SwipeCard
+                  key={scene.id}
+                  leftChoice={scene.leftChoice}
+                  rightChoice={scene.rightChoice}
+                  onChoose={handleChoose}
+                  visible={textDone}
+                />
+              </div>
             )}
           </div>
-
-          {!snippet && (
-            <div className="flex justify-center">
-              <SwipeCard
-                key={scene.id}
-                leftChoice={scene.leftChoice}
-                rightChoice={scene.rightChoice}
-                onChoose={handleChoose}
-                visible={textDone}
-              />
-            </div>
-          )}
         </div>
-      </div>
+      )}
     </div>
   );
 }

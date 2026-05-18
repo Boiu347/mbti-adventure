@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { chapters } from "@/data/story";
 
@@ -17,6 +18,12 @@ const bgColors = [
 
 export default function ChapterTransition({ chapterNumber, onComplete }: Props) {
   const chapter = chapters[chapterNumber - 1];
+  const timerRef = useRef<ReturnType<typeof setTimeout>>();
+
+  useEffect(() => {
+    timerRef.current = setTimeout(onComplete, 3000);
+    return () => clearTimeout(timerRef.current);
+  }, [onComplete]);
 
   return (
     <motion.div
@@ -24,14 +31,12 @@ export default function ChapterTransition({ chapterNumber, onComplete }: Props) 
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.6 }}
-      onAnimationComplete={() => {
-        setTimeout(onComplete, 1800);
-      }}
+      transition={{ duration: 0.8 }}
     >
       <motion.div
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 1.05, opacity: 0 }}
         transition={{ delay: 0.3, duration: 0.5 }}
         className="text-center"
       >
