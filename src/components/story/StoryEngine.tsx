@@ -37,6 +37,7 @@ export default function StoryEngine() {
   const [snippet, setSnippet] = useState<string | null>(null);
   const [snippetDone, setSnippetDone] = useState(false);
   const pendingChoiceRef = useRef<Choice | null>(null);
+  const [tapSignal, setTapSignal] = useState(0);
 
   const scene = scenes[currentIndex];
 
@@ -100,11 +101,18 @@ export default function StoryEngine() {
 
   if (!scene) return null;
 
+  function handleScreenTap() {
+    if (snippet && snippetDone) {
+      handleSnippetContinue();
+      return;
+    }
+    setTapSignal((n) => n + 1);
+  }
+
   return (
     <div
-      className={`relative flex min-h-screen flex-col bg-gradient-to-b ${bgGradients[scene.chapter - 1]} transition-colors duration-1000`}
-      onClick={snippet && snippetDone ? handleSnippetContinue : undefined}
-      style={snippet && snippetDone ? { cursor: "pointer" } : undefined}
+      className={`relative flex min-h-screen cursor-pointer flex-col bg-gradient-to-b ${bgGradients[scene.chapter - 1]} transition-colors duration-1000`}
+      onClick={handleScreenTap}
     >
       <AnimatePresence onExitComplete={() => setIntroExited(true)}>
         {showChapterIntro && (
@@ -129,6 +137,7 @@ export default function StoryEngine() {
                   onComplete={handleSnippetComplete}
                   italic
                   continueText="点击屏幕任意位置继续"
+                  externalClick={tapSignal > 0 ? tapSignal : undefined}
                 />
               ) : (
                 <StoryText
@@ -136,12 +145,16 @@ export default function StoryEngine() {
                   sceneId={scene.id}
                   text={scene.storyText}
                   onComplete={handleTextComplete}
+                  externalClick={tapSignal > 0 ? tapSignal : undefined}
                 />
               )}
             </div>
 
             {!snippet && (
-              <div className="flex justify-center">
+              <div
+                className="flex justify-center"
+                onClick={(e) => e.stopPropagation()}
+              >
                 <SwipeCard
                   key={scene.id}
                   leftChoice={scene.leftChoice}

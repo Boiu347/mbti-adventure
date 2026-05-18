@@ -9,6 +9,7 @@ interface Props {
   sceneId: string;
   italic?: boolean;
   continueText?: string;
+  externalClick?: boolean;
 }
 
 export default function StoryText({
@@ -16,7 +17,8 @@ export default function StoryText({
   onComplete,
   sceneId,
   italic,
-  continueText = "点击继续 →",
+  continueText = "点击屏幕任意位置继续",
+  externalClick,
 }: Props) {
   const [displayed, setDisplayed] = useState("");
   const [typingDone, setTypingDone] = useState(false);
@@ -59,6 +61,13 @@ export default function StoryText({
     }
   }
 
+  useEffect(() => {
+    if (externalClick && !readyToProceed) {
+      handleClick();
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [externalClick]);
+
   return (
     <AnimatePresence mode="wait">
       <motion.div
@@ -67,11 +76,10 @@ export default function StoryText({
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -10 }}
         transition={{ duration: 0.4 }}
-        className="cursor-pointer select-none"
-        onClick={handleClick}
+        className="select-none"
       >
         <p
-          className={`font-serif text-base leading-relaxed md:text-lg md:leading-loose ${
+          className={`font-serif text-lg leading-relaxed md:text-xl md:leading-loose ${
             italic ? "italic text-primary-light/80" : "text-foreground/90"
           }`}
         >
@@ -83,15 +91,15 @@ export default function StoryText({
           )}
         </p>
         {!typingDone && (
-          <p className="mt-3 text-xs text-foreground/30 md:text-sm">
-            点击显示全部
+          <p className="mt-3 text-sm text-foreground/30 md:text-base">
+            点击屏幕任意位置显示全部
           </p>
         )}
         {typingDone && !readyToProceed && (
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="mt-3 text-xs text-primary-light/50 md:text-sm"
+            className="mt-3 text-sm text-primary-light/50 md:text-base"
           >
             {continueText}
           </motion.p>
