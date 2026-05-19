@@ -78,14 +78,15 @@ export default function StoryEngine() {
 
   const [introExited, setIntroExited] = useState(true);
 
-  function handleChapterIntroComplete() {
+  const handleChapterIntroComplete = useCallback(() => {
     setShowChapterIntro(false);
     setTransitioning(false);
-  }
+  }, [setShowChapterIntro, setTransitioning]);
 
   useEffect(() => {
     if (showChapterIntro) {
       setIntroExited(false);
+      setTapSignal(0);
     }
   }, [showChapterIntro]);
 
@@ -114,7 +115,7 @@ export default function StoryEngine() {
       className={`relative flex min-h-screen cursor-pointer flex-col bg-gradient-to-b ${bgGradients[scene.chapter - 1]} transition-colors duration-1000`}
       onClick={handleScreenTap}
     >
-      <AnimatePresence onExitComplete={() => setIntroExited(true)}>
+      <AnimatePresence onExitComplete={() => { setIntroExited(true); setTapSignal(0); }}>
         {showChapterIntro && (
           <ChapterTransition
             chapterNumber={scene.chapter}

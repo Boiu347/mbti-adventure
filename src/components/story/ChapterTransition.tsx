@@ -30,6 +30,7 @@ export default function ChapterTransition({ chapterNumber, onComplete }: Props) 
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.8 }}
+      onClick={(e) => e.stopPropagation()}
     >
       <motion.div
         initial={{ scale: 0.8, opacity: 0 }}
