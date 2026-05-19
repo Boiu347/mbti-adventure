@@ -62,12 +62,20 @@ export default function Hero() {
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.9, duration: 0.6 }}
       >
-        <Link
-          href="/test"
-          className="group inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-violet-600 to-purple-600 px-10 py-4 text-lg font-semibold text-white shadow-lg shadow-violet-600/30 transition-all hover:from-violet-500 hover:to-purple-500 hover:shadow-xl hover:shadow-violet-500/40 active:scale-95 md:px-12 md:py-5 md:text-xl"
-        >
-          <span>踏入冒险</span>
-          <span className="transition-transform group-hover:translate-x-1">→</span>
+        <Link href="/test" className="group relative inline-flex items-center gap-3 px-10 py-4 md:px-12 md:py-5">
+          {/* Outer glow */}
+          <span className="absolute inset-0 rounded-full opacity-40 blur-xl transition-opacity group-hover:opacity-70" style={{ background: "radial-gradient(ellipse at center, rgba(139,92,246,0.6), transparent 70%)" }} />
+          {/* Border */}
+          <span className="absolute inset-0 rounded-full border border-violet-400/30 transition-colors group-hover:border-violet-400/60" />
+          {/* Subtle fill */}
+          <span className="absolute inset-0 rounded-full bg-violet-500/10 transition-colors group-hover:bg-violet-500/20" />
+          {/* Text */}
+          <span className="relative text-lg font-semibold tracking-wide text-violet-200 transition-colors group-hover:text-white md:text-xl">
+            踏入冒险
+          </span>
+          <span className="relative text-lg text-violet-300 transition-all group-hover:translate-x-1 group-hover:text-white md:text-xl">
+            →
+          </span>
         </Link>
       </motion.div>
 
