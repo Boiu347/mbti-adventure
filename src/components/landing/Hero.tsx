@@ -58,24 +58,16 @@ export default function Hero() {
 
       {/* CTA */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.9, duration: 0.6 }}
       >
-        <Link href="/test" className="group relative inline-flex items-center gap-3 px-10 py-4 md:px-12 md:py-5">
-          {/* Outer glow */}
-          <span className="absolute inset-0 rounded-full opacity-40 blur-xl transition-opacity group-hover:opacity-70" style={{ background: "radial-gradient(ellipse at center, rgba(139,92,246,0.6), transparent 70%)" }} />
-          {/* Border */}
-          <span className="absolute inset-0 rounded-full border border-violet-400/30 transition-colors group-hover:border-violet-400/60" />
-          {/* Subtle fill */}
-          <span className="absolute inset-0 rounded-full bg-violet-500/10 transition-colors group-hover:bg-violet-500/20" />
-          {/* Text */}
-          <span className="relative text-lg font-semibold tracking-wide text-violet-200 transition-colors group-hover:text-white md:text-xl">
-            踏入冒险
-          </span>
-          <span className="relative text-lg text-violet-300 transition-all group-hover:translate-x-1 group-hover:text-white md:text-xl">
-            →
-          </span>
+        <Link
+          href="/test"
+          className="group inline-flex items-center gap-2 text-xl font-medium tracking-widest text-violet-300 transition-all hover:text-white hover:tracking-[0.2em] md:text-2xl"
+        >
+          <span>踏 入 冒 险</span>
+          <span className="transition-transform group-hover:translate-x-2">→</span>
         </Link>
       </motion.div>
 
