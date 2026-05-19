@@ -64,16 +64,10 @@ export default function Hero() {
       >
         <Link
           href="/test"
-          className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full px-10 py-4 text-lg font-semibold text-white transition-all md:px-12 md:py-5 md:text-xl"
+          className="group inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-violet-600 to-purple-600 px-10 py-4 text-lg font-semibold text-white shadow-lg shadow-violet-600/30 transition-all hover:from-violet-500 hover:to-purple-500 hover:shadow-xl hover:shadow-violet-500/40 active:scale-95 md:px-12 md:py-5 md:text-xl"
         >
-          {/* Bg gradient */}
-          <span className="absolute inset-0 rounded-full bg-gradient-to-r from-violet-600 to-purple-600 transition-all group-hover:from-violet-500 group-hover:to-purple-500" />
-          {/* Glow */}
-          <span className="absolute inset-0 rounded-full opacity-0 shadow-[0_0_30px_rgba(139,92,246,0.6)] transition-opacity group-hover:opacity-100" />
-          <span className="relative">踏入冒险</span>
-          <span className="relative transition-transform group-hover:translate-x-1">
-            →
-          </span>
+          <span>踏入冒险</span>
+          <span className="transition-transform group-hover:translate-x-1">→</span>
         </Link>
       </motion.div>
 
